@@ -65,8 +65,8 @@ class Database
         $query->bindParam(':refreshed_to', $refreshedTo, PDO::PARAM_STR);
         $query->bindParam(':last_seen', $lastSeen, PDO::PARAM_STR);
         $query->bindParam(':description', $description, PDO::PARAM_STR);
-        $query->bindParam(':price', $price, PDO::PARAM_INT);
-        $query->bindParam(':rent', $rent, PDO::PARAM_INT);
+        $query->bindParam(':price', $price, PDO::PARAM_STR);
+        $query->bindParam(':rent', $rent, PDO::PARAM_STR);
         $query->bindParam(':url', $url, PDO::PARAM_STR);
 
         $query->execute();

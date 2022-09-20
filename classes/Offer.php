@@ -33,6 +33,10 @@ class Offer
         $this->refreshed_to = $refreshed_to;
     }
 
+    public function setLastSeen(){
+        $this->last_seen = date("Y-m-d H:i:s");
+    }
+
     public function setDescription(string $description){
         $this->description = $description;
     }
@@ -72,8 +76,7 @@ class Offer
 
     public function getLastSeen(): string
     {
-        //return $this->last_seen;
-        return date("Y-m-d H:i:s");
+        return $this->last_seen;
     }
 
     public function getDescription(): string
@@ -100,5 +103,31 @@ class Offer
 
     public function save(){
 
+    }
+
+    public function getOfferPrice($offer): ?float
+    {
+        (float)$price = null;
+
+        foreach ($offer->params as $param){
+            if($param->key === "price"){
+                $price = floatval($param->value->value);
+            }
+        }
+
+        return $price;
+    }
+
+    public function getOfferRent($offer): ?float
+    {
+        (float)$rent = null;
+
+        foreach ($offer->params as $param) {
+            if($param->key === "rent"){
+                $rent = floatval($param->value->key);
+            }
+        }
+
+        return $rent;
     }
 }
