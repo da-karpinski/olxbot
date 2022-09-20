@@ -18,4 +18,6 @@ foreach($olx_api_response->data as $item){
     $offer->setPrice($offer->getOfferPrice($item));
     $offer->setRent($offer->getOfferRent($item));
     $offer->setUrl($item->url);
+
+    $database->saveOrUpdate($offer);
 }

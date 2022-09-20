@@ -41,12 +41,22 @@ class Offer
         $this->description = $description;
     }
 
-    public function setPrice(float $price){
-        $this->price = $price;
+    public function setPrice(?float $price){
+        if($price){
+            $this->price = $price;
+        }else{
+            $this->price = 0;
+        }
+
     }
 
-    public function setRent(float $rent){
-        $this->rent = $rent;
+    public function setRent(?float $rent){
+        if($rent){
+            $this->rent = $rent;
+        }else{
+            $this->rent = 0;
+        }
+
     }
 
     public function setUrl(string $url){
