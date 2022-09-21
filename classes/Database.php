@@ -23,8 +23,10 @@ class Database
 
         if(empty($result)){
             $this->insert($offer);
+            return true;
         }else{
             $this->update($offer, $result);
+            return false;
         }
 
     }
