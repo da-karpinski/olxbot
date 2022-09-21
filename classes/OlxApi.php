@@ -11,13 +11,14 @@ class OlxApi
     public function validateAccessKey(){
         $key_valid_to = $this->database->getConfig("olx_api_access_token_expires");
         if($key_valid_to < time()){
-            return $this->refreshKey();
+            $this->refreshKeys();
+            return true;
         }else{
             return null;
         }
     }
 
-    private function refreshKey(){
+    private function refreshKeys(){
         $curl_body = [
             "grant_type" => "refresh_token",
             "client_id" => $this->database->getConfig("olx_api_client_id"),
@@ -25,7 +26,21 @@ class OlxApi
             "refresh_token" => $this->database->getConfig("olx_api_refresh_token")
         ];
 
-        return $this->curlRequest("/api/open/oauth/token", null, $curl_body);
+        $response = $this->curlRequest("/api/open/oauth/token", null, $curl_body);
+        $response = json_decode($response);
+
+        $access_token_expires_at = time() + $response->expires_in;
+        $this->database->updateConfig("olx_api_access_token", $response->access_token);
+        $this->database->updateConfig("olx_api_access_token_expires", $access_token_expires_at);
+
+        $refresh_key_old = $this->database->getConfig("olx_api_refresh_token");
+        $refresh_key_new = $response->refresh_token;
+
+        if($refresh_key_new !== $refresh_key_old){
+            $expires_at = time() + 2592000;
+            $this->database->updateConfig("olx_api_refresh_token", $refresh_key_new);
+            $this->database->updateConfig("olx_api_refresh_token_expires", $expires_at);
+        }
     }
 
     private function curlRequest(string $uri, ?array $headers, ?array $body){
