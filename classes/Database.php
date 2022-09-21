@@ -43,6 +43,13 @@ class Database
         }
     }
 
+    public function updateConfig(string $key, string $value){
+        $query = $this->db->prepare("UPDATE config SET config_value=:value WHERE config_key=:key");
+        $query->bindParam(':key',$key,PDO::PARAM_STR);
+        $query->bindParam(':value',$value,PDO::PARAM_STR);
+        $query->execute();
+    }
+
     private function insert(Offer $offer){
         $offerId = $offer->getOfferId();
         $title = $offer->getTitle();
