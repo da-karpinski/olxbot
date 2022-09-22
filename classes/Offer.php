@@ -12,8 +12,10 @@ class Offer
     private float $rent;
     private string $url;
 
+    private Database $database;
+
     public function __construct(){
-        //constructor
+        $this->database = new Database();
     }
 
     //setters
@@ -33,8 +35,12 @@ class Offer
         $this->refreshed_to = $refreshed_to;
     }
 
-    public function setLastSeen(){
-        $this->last_seen = date("Y-m-d H:i:s");
+    public function setLastSeen(?string $last_seen){
+        if($last_seen){
+            $this->last_seen = $last_seen;
+        }else{
+            $this->last_seen = date("Y-m-d H:i:s");
+        }
     }
 
     public function setDescription(string $description){
@@ -63,7 +69,7 @@ class Offer
         $this->url = $url;
     }
 
-    //setters
+    //getters
     public function getOfferId(): int
     {
         return $this->offer_id;
@@ -111,8 +117,17 @@ class Offer
 
     //methods
 
-    public function save(){
-
+    public function getOffer(int $offer_id){
+        $offer = $this->database->select($offer_id);
+        $this->setOfferId($offer[0]->offer_id);
+        $this->setTitle($offer[0]->title);
+        $this->setCreatedAt($offer[0]->created_at);
+        $this->setRefreshedTo($offer[0]->refreshed_to);
+        $this->setLastSeen($offer[0]->last_seen);
+        $this->setDescription($offer[0]->description);
+        $this->setPrice($offer[0]->price);
+        $this->setRent($offer[0]->rent);
+        $this->setUrl($offer[0]->url);
     }
 
     public function getOfferPrice($offer): ?float

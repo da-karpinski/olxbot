@@ -16,7 +16,7 @@ foreach($olx_api_response->data as $item){
     $offer->setTitle($item->title);
     $offer->setCreatedAt($item->created_time);
     $offer->setRefreshedTo($item->valid_to_time);
-    $offer->setLastSeen();
+    $offer->setLastSeen(null);
     $offer->setDescription($item->description);
     $offer->setPrice($offer->getOfferPrice($item));
     $offer->setRent($offer->getOfferRent($item));

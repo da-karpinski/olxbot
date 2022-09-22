@@ -52,6 +52,14 @@ class Database
         $query->execute();
     }
 
+    public function select(int $offer_id){
+        $query = $this->db->prepare("SELECT * FROM offers WHERE offer_id=:offer_id");
+        $query->bindParam(':offer_id', $offer_id, PDO::PARAM_INT);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
     private function insert(Offer $offer){
         $offerId = $offer->getOfferId();
         $title = $offer->getTitle();
