@@ -30,6 +30,16 @@ class Telegram
         $this->curlRequest("/sendMessage", null, $curl_body);
     }
 
+    public function replyMessage(string $message){
+
+        $curl_body = [
+            "chat_id" => $this->chat_id,
+            "text" => $message
+        ];
+
+        $this->curlRequest("/sendMessage", null, $curl_body);
+    }
+
     private function curlRequest(string $uri, ?array $headers, ?array $body){
         $link = $this->api_url . $this->api_token . $uri;
         $curl = curl_init($link);
