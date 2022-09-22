@@ -15,12 +15,13 @@ class Telegram
     }
 
     public function sendMessage(Offer $offer){
+        $offer_id = $offer->getOfferId();
         $title = $offer->getTitle();
         $price = $offer->getPrice();
         $rent = $offer->getRent();
         $url = $offer->getUrl();
 
-        $message = "📣 NOWE OGŁOSZENIE: \"$title\" za $price zł + $rent zł czynszu. Link do ogłoszenia: $url";
+        $message = "📣 NOWE OGŁOSZENIE: \"$title\" za $price zł + $rent zł czynszu. Link do ogłoszenia: $url\n[ID: $offer_id]";
 
         $curl_body = [
             "chat_id" => $this->chat_id,
