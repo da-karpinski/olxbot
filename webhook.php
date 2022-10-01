@@ -45,11 +45,7 @@ Opis:\n
 $offer_description\n
 ***********KONIEC OPISU***********\n
 Cena: $offer_price zł\n
-Czynsz (dodatkowo): $offer_rent zł\n
-Informacje kontaktowe:
-      Imię: !TODO!
-      Numer telefonu: !TODO!\n
-Link do ogłoszenia:\n$offer_url\n";
+Czynsz (dodatkowo): $offer_rent zł\n";
 
     $telegram->replyMessage($message);
 }

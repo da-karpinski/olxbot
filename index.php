@@ -2,10 +2,7 @@
  require_once "classes/autoload.php";
 
 $database = new Database();
-$olx_api = new OlxApi();
 $telegram_api = new Telegram();
-
-$olx_api->validateAccessKey();
 
 $olx_api_response = file_get_contents($database->getConfig("olx_api_endpoint"));
 $olx_api_response = json_decode($olx_api_response);
