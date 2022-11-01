@@ -4,8 +4,8 @@ class Database
 {
     private PDO $db;
     private string $db_host = "localhost";
-    private string $db_name = "olxbot_oop";
-    private string $db_user = "root";
+    private string $db_name = "olxbot_multiple";
+    private string $db_user = "olxbot_multiple";
     private string $db_password = "";
 
     public function __construct(){
@@ -70,11 +70,12 @@ class Database
         $price = $offer->getPrice();
         $rent = $offer->getRent();
         $url = $offer->getUrl();
+        $category_id = $offer->getCategoryId();
 
         $query = $this->db->prepare("INSERT INTO offers
-                    (offer_id, title, created_at, refreshed_to, last_seen, description, price, rent, url)
+                    (offer_id, title, created_at, refreshed_to, last_seen, description, price, rent, url, category_id)
                     VALUES
-                    (:offer_id, :title, :created_at, :refreshed_to, :last_seen, :description, :price, :rent, :url)");
+                    (:offer_id, :title, :created_at, :refreshed_to, :last_seen, :description, :price, :rent, :url, :category_id)");
 
         $query->bindParam(':offer_id', $offerId, PDO::PARAM_INT);
         $query->bindParam(':title', $title, PDO::PARAM_STR);
@@ -85,6 +86,7 @@ class Database
         $query->bindParam(':price', $price, PDO::PARAM_STR);
         $query->bindParam(':rent', $rent, PDO::PARAM_STR);
         $query->bindParam(':url', $url, PDO::PARAM_STR);
+        $query->bindParam(':category_id', $category_id, PDO::PARAM_INT);
 
         $query->execute();
     }

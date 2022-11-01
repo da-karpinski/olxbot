@@ -11,6 +11,7 @@ class Offer
     private float $price;
     private float $rent;
     private string $url;
+    private int $category_id;
 
     private Database $database;
 
@@ -69,6 +70,10 @@ class Offer
         $this->url = $url;
     }
 
+    public function setCategoryId(int $category_id){
+        $this->category_id = $category_id;
+    }
+
     //getters
     public function getOfferId(): int
     {
@@ -115,6 +120,11 @@ class Offer
         return $this->url;
     }
 
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
+    }
+
     //methods
 
     public function getOffer(int $offer_id){
@@ -128,6 +138,7 @@ class Offer
         $this->setPrice($offer[0]->price);
         $this->setRent($offer[0]->rent);
         $this->setUrl($offer[0]->url);
+        $this->setCategoryId($offer[0]->category_id);
     }
 
     public function getOfferPrice($offer): ?float
