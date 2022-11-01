@@ -14,8 +14,7 @@ class Telegram
         $this->api_token = $this->database->getConfig("telegram_api_token");
     }
 
-    public function sendMessage(Offer $offer){
-        $offer_id = $offer->getOfferId();
+    public function sendMessage(Offer $offer, int $internal_offer_id){
         $title = $offer->getTitle();
         $price = $offer->getPrice();
         $rent = $offer->getRent();
@@ -27,7 +26,7 @@ class Telegram
             $rent_info = " + $rent zł czynszu";
         }
 
-        $message = "[$category_name] 📣 NOWE OGŁOSZENIE: \"$title\" za $price zł$rent_info. Link do ogłoszenia: $url\n[ID: $offer_id]";
+        $message = "[$category_name] 📣 NOWE OGŁOSZENIE: \"$title\" za $price zł$rent_info. Link do ogłoszenia: $url\n[ID: $internal_offer_id]";
 
         $curl_body = [
             "chat_id" => $this->chat_id,

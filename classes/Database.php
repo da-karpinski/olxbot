@@ -22,8 +22,7 @@ class Database
         $result = $query->fetchAll();
 
         if(empty($result)){
-            $this->insert($offer);
-            return true;
+            return $this->insert($offer);
         }else{
             $this->update($offer, $result);
             return false;
@@ -52,9 +51,9 @@ class Database
         $query->execute();
     }
 
-    public function select(int $offer_id){
-        $query = $this->db->prepare("SELECT * FROM offers WHERE offer_id=:offer_id");
-        $query->bindParam(':offer_id', $offer_id, PDO::PARAM_INT);
+    public function select(int $id){
+        $query = $this->db->prepare("SELECT * FROM offers WHERE id=:id");
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
         $query->execute();
 
         return $query->fetchAll(PDO::FETCH_OBJ);
@@ -89,6 +88,7 @@ class Database
         $query->bindParam(':category_id', $category_id, PDO::PARAM_INT);
 
         $query->execute();
+        return $this->db->lastInsertId();
     }
 
     private function update(Offer $offer, $result){

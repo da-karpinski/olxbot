@@ -23,8 +23,10 @@ foreach($olx_api_endpoints as $endpoint){
         $offer->setUrl($item->url);
         $offer->setCategoryId($item->category->id);
 
-        if($database->saveOrUpdate($offer)){
-            $telegram_api->sendMessage($offer);
+        $save = $database->saveOrUpdate($offer);
+
+        if($save !== false){
+            $telegram_api->sendMessage($offer,$save);
         }
     }
 }
