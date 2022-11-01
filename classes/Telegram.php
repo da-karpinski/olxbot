@@ -20,8 +20,14 @@ class Telegram
         $price = $offer->getPrice();
         $rent = $offer->getRent();
         $url = $offer->getUrl();
+        $category_name = $offer->resolveCategory($offer->getCategoryId());
 
-        $message = "📣 NOWE OGŁOSZENIE: \"$title\" za $price zł + $rent zł czynszu. Link do ogłoszenia: $url\n[ID: $offer_id]";
+        $rent_info = "";
+        if($rent > 0){
+            $rent_info = " + $rent zł czynszu";
+        }
+
+        $message = "[$category_name] 📣 NOWE OGŁOSZENIE: \"$title\" za $price zł$rent_info. Link do ogłoszenia: $url\n[ID: $offer_id]";
 
         $curl_body = [
             "chat_id" => $this->chat_id,

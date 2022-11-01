@@ -166,4 +166,15 @@ class Offer
 
         return $rent;
     }
+
+    public function resolveCategory($category_id): string
+    {
+        if($category_id === 15){
+            return "MIESZKANIA";
+        }else if($category_id === 11){
+            return "POKOJE I STANCJE";
+        }else{
+            return "-----";
+        }
+    }
 }
